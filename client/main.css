@@ -1,0 +1,25 @@
+
+#login-validation{
+  width:40%;
+  padding: 20px;
+}
+#register-validation{
+  width: 40%;
+  padding: 20px;
+}
+#forget-validation{
+  width: 40%;
+  padding: 20px;
+}
+#reset-validation{
+  width: 40%;
+  padding: 20px;
+}
+.editmodal{
+  padding: 10px;
+}
+.ui.modal{
+    position: absolute;
+    top: 250px;
+    height:60%;
+}
