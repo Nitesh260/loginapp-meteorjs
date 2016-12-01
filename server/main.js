@@ -3,8 +3,8 @@ import { Meteor } from 'meteor/meteor';
 Meteor.startup(() => {
   // code to run on server at startup
   smtp = {
-  username: 'ak56nit',   // eg: server@gentlenode.com
-  password: 'biggboss@7',   // eg: 3eeP1gtizk5eziohfervU
+  username: 'xxxxx',   // eg: username@gmail.com
+  password: 'xxxxx',   // eg: sfvgjsdgfkjsgkfgksf
   server:   'smtp.gmail.com',  // eg: mail.gandi.net
   port: 465
 }
