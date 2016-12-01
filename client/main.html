@@ -1,0 +1,213 @@
+<head>
+  <title>loginapp</title>
+</head>
+
+<body>
+  {{#if currentUser}}
+    {{> header1}}
+  {{else}}
+   {{> header}}
+  {{/if}}
+</body>
+<template name="header">
+  <ul class="nav nav-tabs">
+    <li><a href="/">Register</a></li>
+    <li><a href="/login">Login</a></li>
+    <li><a href="/forget">Forget password</a></li>
+  </ul>
+</template>
+<template name="header1">
+  <ul class="nav nav-tabs">
+    <li><div class="ui compact menu">
+  <div class="ui simple dropdown item">
+    <a href="/dashboard">{{currentUser.profile.name}}</a>
+    <i class="dropdown icon"></i>
+    <div class="menu">
+      <div class="item logout">Logout</div>
+    </div>
+  </div>
+</div></li>
+  </ul>
+</template>
+<template name="register">
+  <div class="container-fluid">
+    <form class="ui form segment" id="register-validation">
+        <p><label>Name</label>
+        <input type="text" name="fullname" class="required form-control" placeholder="Full Name"></p>
+        <p><label>Email</label>
+        <input type="email" name="registerEmail" class="required email form-control" placeholder="Email"></p>
+        <p><label>Date Of Birth</label>
+        <input type="text" class="form-control required" id="my-datepicker" name="dob" placeholder="Date Of Birth"></p>
+        <p><label>Password</label>
+        <input type="password" name="registerPassword" class="required form-control" placeholder="Password"></p>
+        <p><input type="submit" value="Register" class="btn btn-primary"></p>
+    </form>
+  </div>
+</template>
+
+<template name="login">
+  <div class="container-fluid">
+    <form class="ui form segment" id="login-validation">
+      <p>
+        <label>Email</label>
+        <input type="email" name="loginEmail" class="required email form-control" placeholder="Email"></p>
+      <p>
+        <label>Password</label>
+        <input type="password" name="loginPassword" class="required form-control" placeholder="Password"></p>
+      <p><input type="submit" value="Login" class="btn btn-primary"></p>
+    </form>
+  </div>
+</template>
+
+<template name="forget">
+  <div class="container-fluid">
+    <form id="forget-validation">
+      <p>
+        <input type="email" name="forgetEmail" class="required email form-control" placeholder="Email">
+      </p>
+      <p><input type="submit" value="submit" class="btn btn-primary"></p>
+    </form>
+  </div>
+</template>
+
+<template name="resetpassword">
+  <form id="reset-validation">
+    <p><input type="password" name="resetPassword" class="required form-control" placeholder="New Password"></p>
+    <p><input type="submit" value="submit" class="btn btn-primary"></p>
+  </form>
+</template>
+
+<template name="dashboard">
+  <div class="container">
+    <div class="ui horizontal divider"><strong>Welcome {{currentUser.profile.name}} <span style="color:#ff3333">({{rolename}})</span></strong></div>
+    <table class="ui celled table">
+      <thead><tr><th>Name</th>
+        <th>
+          Date Of Birth
+        </th>
+        <th>
+          Role
+        </th>
+        <th>
+          Delete
+        </th>
+        <th>
+          Edit
+        </th>
+      </tr></thead>
+      {{#each isReady}}
+      <tr>
+        <td>
+          {{profile.name}}
+        </td>
+        <td>
+          {{profile.dob}}
+        </td>
+        <td>
+          {{profile.role}}
+        </td>
+        <td>
+          <a href="" class="delete">Delete</a>
+        </td>
+        <td>
+          <a href="" class="edit">Edit</a>
+        </td>
+      </tr>
+      {{/each}}
+    </table>
+    <div class="ui modal" id="EditModal">
+        <i class="close icon"></i>
+      <div class="content">
+        <form id="form-validation">
+          <label>Full Name</label>
+          <p class="editmodal"><input type="text" name="fname" class="required form-control" placeholder="Full Name"></p>
+          <label>Date of birth</label>
+          <p class="editmodal"><input type="text" class="form-control required" id="my-datepicker" name="dob" placeholder="Date Of Birth"></p>
+          <label>Role</label>
+          {{#if roletype}}
+          <p><select class="form-control required" name="role">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select></p>
+          {{else}}
+            {{#if roletype1}}
+              <p><select class="form-control required" name="role">
+                <option value="1">1</option>
+                <option value="2">2</option>
+              </select></p>
+            {{else}}
+              <p><select class="form-control required" name="role">
+                <option value="2">2</option>
+              </select></p>
+            {{/if}}
+          {{/if}}
+          <div class="actions">
+            <div id="update" type="submit" class="ui positive button">
+              Update
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="ui teal labeled icon button" id="addUser">
+  Add New User
+  <i class="add icon"></i>
+</div>
+  </div>
+</template>
+
+<template name="exampleModal">
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+              <form>
+                <p class="editmodal"><input type="text" name="fullname" class="required form-control" placeholder="Full Name" value={{fullname}}></p>
+                <p class="editmodal"><input type="text" class="form-control" id="my-datepicker" name="dob" placeholder="Date Of Birth" value={{dob}}></p>
+                <p class="editmodal"><input type="submit" class="update btn btn-success" value="Update"></p>
+              </form>
+          </div>
+        </div>
+    </div>
+</template>
+
+<template name="AddUser">
+  <div class="container">
+    <div class="ui horizontal divider"><strong>Add New User</strong></div>
+    <div class="ui breadcrumb">
+      <a class="section" href="/dashboard">Dashboard</a>
+      <div class="divider"> / </div>
+      <div class="active section">Add new user</div>
+    </div>
+    <form id="add-validation">
+      <label>Name</label>
+      <p><input type="text" name="fullname" class="required form-control" placeholder="Full Name"></p>
+      <label>Email</label>
+      <p><input type="email" name="registerEmail" class="required email form-control" placeholder="Email"></p>
+      <label>Date of Birth</label>
+      <p><input type="text" class="form-control required" id="my-datepicker" name="dob" placeholder="Date Of Birth"></p>
+      <label>Password</label>
+      <p><input type="password" name="registerPassword" class="required form-control" placeholder="Password"></p>
+      <label>Role</label>
+      {{#if roletype}}
+      <p><select class="form-control required" name="role">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+      </select></p>
+      {{else}}
+        {{#if roletype1}}
+          <p><select class="form-control required" name="role">
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select></p>
+        {{else}}
+          <p><select class="form-control required" name="role">
+            <option value="2">2</option>
+          </select></p>
+        {{/if}}
+      {{/if}}
+      <p><input type="submit" value="Add User" class="btn btn-primary"></p>
+    </form>
+  </div>
+</template>
